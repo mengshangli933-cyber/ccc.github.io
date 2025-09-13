@@ -21,13 +21,18 @@ document.getElementById('copyright-year').textContent = new Date().getFullYear()
 
 function updateNavActive() {
     const navLinks = document.querySelectorAll('nav ul li a');
-    // 获取当前页面的完整路径
-    const path = window.location.pathname;
+    const path = /ccc.github.io/index.html
+    
+    // 提取文件名
+    let currentPage = path.split('/').pop();
+    if (!currentPage) {
+        currentPage = 'index.html'; // 处理根目录情况
+    }
     
     navLinks.forEach(link => {
-        const linkHref = link.getAttribute('href');
-        // 判断当前路径是否以链接的href结尾，或者链接是index.html且当前路径是根目录
-        if (path.endsWith(linkHref) || (linkHref === 'index.html' && (path === '/' || path.endsWith('/')))) {
+        // 确保链接路径也是相对路径
+        let linkHref = link.getAttribute('href');
+        if (linkHref === currentPage) {
             link.classList.add('active');
         } else {
             link.classList.remove('active');
@@ -87,5 +92,6 @@ function setupHomePage() {
         });
     }
 }
+
 
 
