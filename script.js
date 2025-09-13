@@ -19,18 +19,27 @@ document.addEventListener('DOMContentLoaded', function() {
 // 自动更新年份
 document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
-function updateNavActive(currentPage) {
+function updateNavActive() {
     const navLinks = document.querySelectorAll('nav ul li a');
+    // 获取当前页面的完整路径
+    const path = window.location.pathname;
     
     navLinks.forEach(link => {
         const linkHref = link.getAttribute('href');
-        if (linkHref === currentPage) {
+        // 判断当前路径是否以链接的href结尾，或者链接是index.html且当前路径是根目录
+        if (path.endsWith(linkHref) || (linkHref === 'index.html' && (path === '/' || path.endsWith('/')))) {
             link.classList.add('active');
         } else {
             link.classList.remove('active');
         }
     });
 }
+
+// 在DOM加载完成后调用
+document.addEventListener('DOMContentLoaded', function() {
+    updateNavActive(); // 不再需要传递参数
+    // ... 其他初始化代码
+});
 
 function setupContactForm() {
     const contactForm = document.getElementById('contactForm');
@@ -78,4 +87,5 @@ function setupHomePage() {
         });
     }
 }
+
 
